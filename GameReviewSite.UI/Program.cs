@@ -1,7 +1,3 @@
-using GameReviewSite.DAL;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-
 namespace GameReviewSite.UI
 {
     public class Program
@@ -12,8 +8,8 @@ namespace GameReviewSite.UI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             var configuration = builder.Configuration;
-            builder.Services.AddDbContext<GameDbContext>(options =>
-              options.UseSqlServer(configuration.GetConnectionString("DefConn")));
+            //builder.Services.AddDbContext<GameDbContext>(options =>
+            //  options.UseSqlServer(configuration.GetConnectionString("DefConn")));
 
             var app = builder.Build();
 

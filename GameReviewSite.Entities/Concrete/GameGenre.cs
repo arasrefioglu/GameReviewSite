@@ -2,7 +2,7 @@
 
 namespace GameReviewSite.Entities.Concrete
 {
-    public class GameGenre : AEntity
+    public class GameGenre : AuditEntity
     {
         public string Name { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace GameReviewSite.Entities.Concrete
 {
-    public class User : AEntity
+    public class User : AuditEntity
     {
         public string Username { get; set; }
         public string Email { get; set; }

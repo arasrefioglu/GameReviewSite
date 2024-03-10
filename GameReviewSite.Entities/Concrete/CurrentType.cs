@@ -2,7 +2,7 @@
 
 namespace GameReviewSite.Entities.Concrete
 {
-    public class CurrencyType : AEntity
+    public class CurrencyType : AuditEntity
     {
         public string Name { get; set; }
         public string Symbol { get; set; }
