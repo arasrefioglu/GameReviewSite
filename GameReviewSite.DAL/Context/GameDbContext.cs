@@ -17,7 +17,8 @@ namespace GameReviewSite.DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("GameReviewSite.Entities"));
+
         }
 
 
