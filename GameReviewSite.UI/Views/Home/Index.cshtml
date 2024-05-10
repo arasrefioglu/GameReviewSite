@@ -3,6 +3,27 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to Game Review Site!</h1>
+    <p>Explore the latest and greatest in gaming.</p>
+
+    <!-- Admin Panel Link -->
+    @if (User.IsInRole("Admin"))
+    {
+        <div>
+            <a href="@Url.Action("Index", "Admin")" class="btn btn-primary">Admin Dashboard</a>
+        </div>
+    }
+
+    <!-- Game List Link -->
+    <div>
+        <a href="@Url.Action("Index", "Game")" class="btn btn-secondary">View Games</a>
+    </div>
+
+    <!-- User Panel Link (if needed) -->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            <a href="@Url.Action("Index", "User")" class="btn btn-success">User Dashboard</a>
+        </div>
+    }
 </div>

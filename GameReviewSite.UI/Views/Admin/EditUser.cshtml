@@ -1,0 +1,16 @@
+﻿@model GameReviewSite.Entities.Concrete.User
+
+<h2>Edit User</h2>
+
+<form asp-action="EditUser" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label>Username</label>
+        <input asp-for="UserName" class="form-control" /> <!-- Düzeltme burada yapıldı -->
+    </div>
+    <div class="form-group">
+        <label>Email</label>
+        <input asp-for="Email" type="email" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-success">Update</button>
+</form>

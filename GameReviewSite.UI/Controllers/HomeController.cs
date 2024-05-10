@@ -1,20 +1,28 @@
+using GameReviewSite.BL.Abstract;
+using GameReviewSite.Entities.Concrete;
 using GameReviewSite.UI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GameReviewSite.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IGameService _gameService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IGameService gameService)
         {
-            _logger = logger;
+            _gameService = gameService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var popularGames = await _gameService.GetPopularGamesAsync();
+            var recentGames = await _gameService.GetRecentGamesAsync();
+            ViewBag.PopularGames = popularGames;
+            ViewBag.RecentGames = recentGames;
             return View();
         }
 
@@ -26,7 +34,11 @@ namespace GameReviewSite.UI.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var errorViewModel = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+            return View(errorViewModel);
         }
     }
 }

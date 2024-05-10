@@ -1,0 +1,24 @@
+﻿@model IEnumerable<GameReviewSite.Entities.Concrete.Game>
+
+<h1>Game List</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Game Name</th>
+            <th>Game Genre</th>
+            <th>Score</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.Name</td>
+                <td>@game.Genre.Name</td>
+                <td>@game.Ratings.Average(r => r.Rating)</td>
+                <td><a asp-action="Details" asp-route-id="@game.Id">Detaylar</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,15 +1,21 @@
-﻿using GameReviewSite.Entities.Abstract;
+﻿using GameReviewSite.Entities.Concrete;
+using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GameReviewSite.Entities.Concrete
 {
-    public class User : AuditEntity
-    {
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public bool IsAdmin { get; set; }
 
+
+    public class User : IdentityUser
+    {
+        public bool IsAdmin { get; set; }
         public virtual ICollection<UserRating> Ratings { get; set; }
         public virtual ICollection<GameComment> Comments { get; set; }
+
+        [NotMapped] // EF Core bu özelliği veritabanına eklemez
+        public string Password { get; set; }
     }
+
+
 }

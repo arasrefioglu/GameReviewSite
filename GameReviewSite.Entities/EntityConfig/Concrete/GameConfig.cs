@@ -11,7 +11,6 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
             base.Configure(builder);
 
             builder.Property(p => p.Name).HasMaxLength(50);
-            builder.Property(p => p.ReleaseYear).HasMaxLength(4);
             builder.HasIndex(p => p.GameGenreId).IsUnique();
         }
     }

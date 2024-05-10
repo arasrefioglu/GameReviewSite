@@ -1,11 +1,10 @@
-﻿using GameReviewSite.DAL;
-using GameReviewSite.DAL.Context;
-using GameReviewSite.DAL.Repository.Abstract;
+﻿using GameReviewSite.DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace GameReviewSite.Repositories
 {
@@ -20,41 +19,57 @@ namespace GameReviewSite.Repositories
             _dbSet = context.Set<TEntity>();
         }
 
-        public TEntity GetById(int id)
+        public async Task<TEntity> GetByIdAsync(int id)
         {
-            return _dbSet.Find(id);
+            return await _dbSet.FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return _dbSet.ToList();
+            return await _dbSet.ToListAsync();
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return _dbSet.Where(predicate).ToList();
+            return await _dbSet.Where(predicate).ToListAsync();
         }
 
-        public void Add(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
-            _dbSet.Add(entity);
+            await _dbSet.AddAsync(entity);
         }
 
-        public void AddRange(IEnumerable<TEntity> entities)
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            _dbSet.AddRange(entities);
+            await _dbSet.AddRangeAsync(entities);
         }
 
-        public void Remove(TEntity entity)
+        public Task Update(TEntity entity)
+        {
+            // Attach the entity if it isn't already attached to the context
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _dbSet.Attach(entity);
+            }
+            _context.Entry(entity).State = EntityState.Modified;
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveAsync(TEntity entity)
         {
             _dbSet.Remove(entity);
+            return Task.CompletedTask;
         }
 
-        public void RemoveRange(IEnumerable<TEntity> entities)
+        public Task RemoveRangeAsync(IEnumerable<TEntity> entities)
         {
             _dbSet.RemoveRange(entities);
+            return Task.CompletedTask;
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
-
-
 }

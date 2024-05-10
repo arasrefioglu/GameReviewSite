@@ -9,8 +9,11 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
         public override void Configure(EntityTypeBuilder<UserRating> builder)
         {
             base.Configure(builder);
-            builder.HasIndex(p => p.GameId).IsUnique();
-            builder.HasIndex(p => p.UserId).IsUnique();
+            //builder.HasIndex(p => p.GameId).IsUnique();
+            //builder.HasIndex(p => p.UserId).IsUnique();
+
+            builder.HasIndex(p => p.GameId); 
+            builder.HasIndex(p => p.UserId);
         }
     }
 }

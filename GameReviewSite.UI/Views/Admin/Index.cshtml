@@ -1,0 +1,27 @@
+﻿@model IEnumerable<GameReviewSite.Entities.Concrete.Game>
+
+<h1>Game List</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Release Date</th>
+            <th>Genre</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model)
+        {
+            <tr>
+                <td>@game.Name</td>
+                <td>@game.ReleaseYear</td>
+                <td>@game.Genre.Name</td>
+                <td><a asp-action="Details" asp-controller="Game" asp-route-id="@game.Id" class="btn btn-primary">Detaylar</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" asp-controller="Game" class="btn btn-success">Yeni Oyun Ekle</a>
+
