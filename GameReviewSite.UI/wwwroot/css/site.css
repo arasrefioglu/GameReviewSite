@@ -20,3 +20,52 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* site.css */
+.navbar-text {
+    font-size: 1rem;
+    margin-right: 10px;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+}
+
+
+.user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-right: 10px;
+    margin-left: auto; /* Kullan?c? simgesini sa?a hizalar */
+    position: relative; /* Bu stil menüyü düzgün hizalamak için gerekli olabilir */
+}
+
+.user-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.navbar-nav .dropdown-menu {
+    left: auto; /* Dropdown menüyü sa?a hizalar */
+    right: 0; /* Dropdown menüyü sa?a hizalar */
+}
+
+.dropdown-toggle::after {
+    display: none; /* Varsay?lan dropdown oku kald?r?r */
+}

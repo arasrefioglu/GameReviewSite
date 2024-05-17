@@ -14,8 +14,6 @@ namespace GameReviewSite.UI.Services
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<GameDbContext>();
-
-            // Burada diğer identity konfigürasyonlarını ve rol yönetimi işlemlerini ekleyebilirsiniz
         }
 
         public static async Task InitializeRoles(IServiceProvider serviceProvider)

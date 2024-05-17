@@ -1,0 +1,38 @@
+﻿@model LoginViewModel
+
+
+<br>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <strong>Error:</strong>
+        @foreach (var key in ViewData.ModelState.Keys)
+        {
+            @foreach (var error in ViewData.ModelState[key].Errors)
+            {
+                <div>@error.ErrorMessage</div>
+            }
+        }
+    </div>
+}
+
+<form asp-action="Login" method="post">
+    <div class="form-group">
+        <label asp-for="Email">Email Address:</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <br>
+    <div class="form-group">
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" type="password" class="form-control" />
+    </div>
+    <br>
+    <div class="form-group">
+        <input type="checkbox" asp-for="RememberMe" />
+        <label asp-for="RememberMe"></label>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+

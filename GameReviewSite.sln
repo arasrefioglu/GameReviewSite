@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameReviewSite.Entities", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameReviewSite.UI", "GameReviewSite.UI\GameReviewSite.UI.csproj", "{7ACE292C-5758-4D01-A020-375B67780DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameReviewSite.BL", "GameReviewSite.BL\GameReviewSite.BL.csproj", "{E5990298-2E0F-4883-BAE6-B15EA97350C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameReviewSite.BL", "GameReviewSite.BL\GameReviewSite.BL.csproj", "{E5990298-2E0F-4883-BAE6-B15EA97350C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

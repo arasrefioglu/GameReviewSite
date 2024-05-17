@@ -13,7 +13,7 @@ namespace GameReviewSite.Entities.Concrete
         public virtual ICollection<UserRating> Ratings { get; set; }
         public virtual ICollection<GameComment> Comments { get; set; }
 
-        [NotMapped] // EF Core bu özelliği veritabanına eklemez
+        [NotMapped] 
         public string Password { get; set; }
     }
 

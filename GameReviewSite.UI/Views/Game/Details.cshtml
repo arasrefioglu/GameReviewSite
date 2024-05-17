@@ -6,30 +6,37 @@
     <h3>Details</h3>
     <p>Genre: @Model.Genre.Name</p>
     <p>Release Year: @Model.ReleaseYear</p>
-    <p>Average Score: @Model.Ratings.Average(r => r.Rating)</p>
+    <p>Average Score: @Model.Ratings.DefaultIfEmpty().Average(r => r?.Rating ?? 0)</p>
 </div>
 
-<h4>Yorumlar</h4>
-<ul>
-    @foreach (var comment in Model.Comments)
-    {
-        <li>@comment.Comment - @comment.User.UserName</li>
-    }
-</ul>
+@if (User.Identity.IsAuthenticated)
+{
+    <h4>Comments</h4>
+    <ul>
+        @foreach (var comment in Model.Comments)
+        {
+            <li>@comment.Comment - @comment.User.UserName</li>
+        }
+    </ul>
 
-<form asp-action="AddComment" asp-route-gameId="@Model.Id" method="post">
-    <label for="comment">Comment</label>
-    <textarea name="comment" id="comment" cols="30" rows="5" required></textarea>
-    <button type="submit" class="btn btn-primary">Add Comment</button>
-</form>
+    <form asp-action="AddComment" asp-route-gameId="@Model.Id" method="post">
+        <label for="comment">Comment</label>
+        <textarea name="comment" id="comment" cols="30" rows="5" required></textarea>
+        <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
 
-<h4>Puan Ver</h4>
-<form asp-action="AddRating" asp-route-gameId="@Model.Id" method="post">
-    <label for="rating">Score (1-10):</label>
-    <input type="number" name="rating" id="rating" min="1" max="10" required>
-    <button type="submit" class="btn btn-success">Add Score</button>
-</form>
+    <h4>Add Score</h4>
+    <form asp-action="AddRating" asp-route-gameId="@Model.Id" method="post">
+        <label for="rating">Score (1-10):</label>
+        <input type="number" name="rating" id="rating" min="1" max="10" required>
+        <button type="submit" class="btn btn-success">Add Score</button>
+    </form>
+}
 
-<a asp-action="Edit" asp-controller="Game" asp-route-id="@Model.Id" class="btn btn-info">Düzenle</a>
-<a asp-action="Delete" asp-controller="Game" asp-route-id="@Model.Id" class="btn btn-danger">Sil</a>
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Edit" asp-controller="Game" asp-route-id="@Model.Id" class="btn btn-info">Edit</a>
+    <a asp-action="Delete" asp-controller="Game" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+}
+
 <a asp-action="Index" asp-controller="Game" class="btn btn-secondary">Return Game List</a>

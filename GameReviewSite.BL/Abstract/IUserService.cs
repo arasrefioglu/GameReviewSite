@@ -6,6 +6,6 @@ public interface IUserService
     Task<User> GetUserByIdAsync(int userId);
     Task AddUserAsync(User user);
     Task UpdateUserAsync(User user);
-    Task DeleteUserAsync(int userId);  // Parametre türünü int olarak değiştirin
+    Task DeleteUserAsync(int userId);  
     Task AssignRoleAsync(int userId, string role);
 }

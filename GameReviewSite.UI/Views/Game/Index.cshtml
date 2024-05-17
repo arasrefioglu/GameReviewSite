@@ -1,13 +1,26 @@
 ﻿@model IEnumerable<GameReviewSite.Entities.Concrete.Game>
 
 <h1>Game List</h1>
+
+<!-- Add Game Button (visible only to admins) -->
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Add" class="btn btn-success mb-2">Add New Game</a>
+}
+
 <table class="table">
     <thead>
         <tr>
             <th>Game Name</th>
             <th>Game Genre</th>
+            <th>Release Year</th>
+            <th>Image</th>
             <th>Score</th>
             <th>Details</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -16,8 +29,17 @@
             <tr>
                 <td>@game.Name</td>
                 <td>@game.Genre.Name</td>
+                <td>@game.ReleaseYear</td>
+                <td><img src="@Url.Content(game.Image)" alt="Image of @game.Name" style="width:100px;height:100px;"/></td>
                 <td>@game.Ratings.Average(r => r.Rating)</td>
-                <td><a asp-action="Details" asp-route-id="@game.Id">Detaylar</a></td>
+                <td><a asp-action="Details" asp-route-id="@game.Id">Details</a></td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@game.Id" class="btn btn-primary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@game.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                }
             </tr>
         }
     </tbody>

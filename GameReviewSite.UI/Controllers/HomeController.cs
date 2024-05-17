@@ -1,4 +1,4 @@
-using GameReviewSite.BL.Abstract;
+﻿using GameReviewSite.BL.Abstract;
 using GameReviewSite.Entities.Concrete;
 using GameReviewSite.UI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -26,10 +26,6 @@ namespace GameReviewSite.UI.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -40,5 +36,28 @@ namespace GameReviewSite.UI.Controllers
             };
             return View(errorViewModel);
         }
+
+        public IActionResult Login()
+        {
+            return View(); // Bu view login formunu gösterecek
+        }
+
+        public IActionResult AddGame()
+        {
+            return View(); // Bu view yeni oyun eklemek için formu gösterecek
+        }
+
+        public IActionResult RateGames()
+        {
+            return View(); // Bu view oyunlara puan verme işlemini yapacak
+        }
+
+        public IActionResult CommentGames()
+        {
+            return View(); // Bu view oyunlara yorum yapma işlemini yapacak
+        }
+
+
+
     }
 }
