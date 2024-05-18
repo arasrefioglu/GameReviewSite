@@ -1,0 +1,43 @@
+﻿@model IEnumerable<GameReviewSite.Entities.Concrete.Game>
+
+<h3>Game List
+
+    @if (User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com")
+    {
+        <a href="@Url.Action("Add", "Game")" class="add-game-button text-decoration-none">+</a>
+    }
+
+</h3>
+   
+
+
+
+
+<br>
+<div class="row">
+    @foreach (var game in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="@Url.Content(game.Image)" class="card-img-top fixed-img" alt="@game.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@game.Name</h5>
+                    <p class="card-text">Genre: @game.Genre.Name</p>
+                    <p class="card-text">Release Year: @game.ReleaseYear</p>
+                    <p class="card-text">Editor Rating: @game.EditorRating</p>
+                    <a href="@Url.Action("Details", "Game", new { id = game.Id })" class="btn btn-primary">Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .fixed-img {
+        height: 300px;
+        object-fit: cover;
+    }
+</style>
+
+
+

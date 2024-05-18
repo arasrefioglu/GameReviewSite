@@ -26,7 +26,7 @@ namespace GameReviewSite.BL.Concrete
 
         public async Task<IEnumerable<Game>> GetGamesAsync()
         {
-            return await _gameRepository.GetAllAsync();
+            return await _gameRepository.GetAllWithIncludesAsync(g => g.Genre);
         }
 
         public async Task<Game> GetGameByIdAsync(int id)

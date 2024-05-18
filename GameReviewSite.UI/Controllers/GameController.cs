@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-
-[Authorize]
 public class GameController : Controller
 {
     private readonly IGameService _gameService;
@@ -17,9 +15,11 @@ public class GameController : Controller
     }
 
     // Oyun listesini gösterir
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> ViewGames()
     {
         var games = await _gameService.GetGamesAsync();
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        ViewBag.IsAdmin = isAdmin;
         return View(games);
     }
 
@@ -44,7 +44,6 @@ public class GameController : Controller
         return RedirectToAction("Details", new { id = gameId });
     }
 
-
     // Oyuna puan ekler
     [HttpPost]
     public async Task<IActionResult> AddRating(int gameId, int rating)
@@ -54,7 +53,6 @@ public class GameController : Controller
         await _gameService.AddRatingAsync(userRating);
         return RedirectToAction("Details", new { id = gameId });
     }
-
 
     // Yeni oyun ekleme sayfasını gösterir
     [Authorize(Roles = "Admin")]
@@ -74,7 +72,7 @@ public class GameController : Controller
         }
 
         await _gameService.AddGameAsync(game);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(ViewGames));
     }
 
     // Oyun düzenleme sayfasını gösterir
@@ -100,7 +98,7 @@ public class GameController : Controller
         }
 
         await _gameService.UpdateGameAsync(game);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(ViewGames));
     }
 
     // Oyun siler
@@ -114,7 +112,6 @@ public class GameController : Controller
         }
 
         await _gameService.DeleteGameAsync(id);
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(ViewGames));
     }
-
 }

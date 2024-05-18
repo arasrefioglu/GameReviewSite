@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -45,7 +45,7 @@ body {
     text-transform: uppercase;
     margin-right: 10px;
     margin-left: auto; /* Kullan?c? simgesini sa?a hizalar */
-    position: relative; /* Bu stil men�y� d�zg�n hizalamak i�in gerekli olabilir */
+    position: relative; /* Bu stil menüyü düzgün hizalamak için gerekli olabilir */
 }
 
 .user-initial {
@@ -62,10 +62,85 @@ body {
 }
 
 .navbar-nav .dropdown-menu {
-    left: auto; /* Dropdown men�y� sa?a hizalar */
-    right: 0; /* Dropdown men�y� sa?a hizalar */
+    left: auto; /* Dropdown menüyü sa?a hizalar */
+    right: 0; /* Dropdown menüyü sa?a hizalar */
 }
 
 .dropdown-toggle::after {
     display: none; /* Varsay?lan dropdown oku kald?r?r */
+}
+
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.card-img-top {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 14px;
+}
+
+.btn-group .btn {
+    font-size: 12px;
+}
+
+.btn-circle {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 20px;
+}
+
+.btn-circle.btn-lg {
+        width: 60px;
+        height: 60px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 35px;
+    }
+
+
+.add-game-button {
+    display: inline-block;
+    background-color: green;
+    color: white; /* Yaz? rengini beyaz yapt?k */
+    width: 40px; /* Butonun geni?li?ini ayarlad?k */
+    height: 40px; /* Butonun yüksekli?ini ayarlad?k */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px; /* Yaz?y? ortalad?k */
+    font-size: 28px; /* Yaz? boyutunu büyüttük */
+    font-weight: bold; /* Yaz? kal?nl???n? art?rd?k */
+    text-decoration: none; /* Alt çizgiyi kald?rd?k */
+    margin-left: 10px;
+}
+
+.background-image {
+    background-image: url('/images/background.jpg');
+    background-size: contain; /* cover'dan contain'e değiştirildi */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 600px; /* Yükseklik artırıldı */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
 }
