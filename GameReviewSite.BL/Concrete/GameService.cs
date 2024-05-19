@@ -1,5 +1,6 @@
 ﻿using GameReviewSite.BL.Abstract;
 using GameReviewSite.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,16 +13,19 @@ namespace GameReviewSite.BL.Concrete
         private readonly IRepository<Game> _gameRepository;
         private readonly IRepository<GameComment> _commentRepository;
         private readonly IRepository<UserRating> _ratingRepository;
+        private readonly IRepository<GameGenre> _genreRepository;
 
         public GameService(
             IRepository<Game> gameRepository,
             IRepository<GameComment> commentRepository,
-            IRepository<UserRating> ratingRepository
+            IRepository<UserRating> ratingRepository,
+             IRepository<GameGenre> genreRepository
             )
         {
             _gameRepository = gameRepository;
             _commentRepository = commentRepository;
             _ratingRepository = ratingRepository;
+            _genreRepository = genreRepository;
         }
 
         public async Task<IEnumerable<Game>> GetGamesAsync()
@@ -87,6 +91,21 @@ namespace GameReviewSite.BL.Concrete
         {
             int currentYear = DateTime.Now.Year; // Geçerli yılı al
             return await _gameRepository.FindAsync(g => g.ReleaseYear >= currentYear - 1);
+        }
+
+        public async Task<Game> GetGameDetailsAsync(int id)
+        {
+            // Genre, Ratings ve Comments nesnelerini dahil ediyoruz
+            var game = (await _gameRepository.FindAsync(g => g.Id == id)).FirstOrDefault();
+
+            if (game != null)
+            {
+                game.Genre = (await _genreRepository.FindAsync(g => g.Id == game.GameGenreId)).FirstOrDefault();
+                game.Ratings = (await _ratingRepository.FindAsync(r => r.GameId == id)).ToList();
+                game.Comments = (await _commentRepository.FindAsync(c => c.GameId == id)).ToList();
+            }
+
+            return game;
         }
 
     }

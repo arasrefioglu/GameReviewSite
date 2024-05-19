@@ -20,5 +20,7 @@ namespace GameReviewSite.BL.Abstract
 
         Task<IEnumerable<Game>> GetPopularGamesAsync();
         Task<IEnumerable<Game>> GetRecentGamesAsync();
+
+        Task<Game> GetGameDetailsAsync(int id);
     }
 }

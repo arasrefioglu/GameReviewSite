@@ -26,7 +26,7 @@ public class GameController : Controller
     // Oyun detaylarını gösterir
     public async Task<IActionResult> Details(int id)
     {
-        var game = await _gameService.GetGameByIdAsync(id);
+        var game = await _gameService.GetGameDetailsAsync(id);
         if (game == null)
         {
             return NotFound();
@@ -34,12 +34,13 @@ public class GameController : Controller
         return View(game);
     }
 
+
     // Oyuna yorum ekler
     [HttpPost]
     public async Task<IActionResult> AddComment(int gameId, string comment)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var gameComment = new GameComment { GameId = gameId, Comment = comment, UserId = userId }; // UserId artık string olarak kullanılıyor.
+        var gameComment = new GameComment { GameId = gameId, Comment = comment, UserId = userId };
         await _gameService.AddCommentAsync(gameComment);
         return RedirectToAction("Details", new { id = gameId });
     }
@@ -49,23 +50,33 @@ public class GameController : Controller
     public async Task<IActionResult> AddRating(int gameId, int rating)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var userRating = new UserRating { GameId = gameId, Rating = rating, UserId = userId }; // UserId artık string türünde olduğu için int dönüşümüne gerek yok.
+        var userRating = new UserRating { GameId = gameId, Rating = rating, UserId = userId };
         await _gameService.AddRatingAsync(userRating);
         return RedirectToAction("Details", new { id = gameId });
     }
 
     // Yeni oyun ekleme sayfasını gösterir
-    [Authorize(Roles = "Admin")]
+    [HttpGet]
     public IActionResult Add()
     {
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        if (!isAdmin)
+        {
+            return RedirectToAction("AccessDenied", "Account");
+        }
         return View();
     }
 
     // Yeni oyun ekler
-    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Add(Game game)
     {
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        if (!isAdmin)
+        {
+            return RedirectToAction("AccessDenied", "Account");
+        }
+
         if (!ModelState.IsValid)
         {
             return View(game);
@@ -76,9 +87,15 @@ public class GameController : Controller
     }
 
     // Oyun düzenleme sayfasını gösterir
-    [Authorize(Roles = "Admin")]
+    [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        if (!isAdmin)
+        {
+            return RedirectToAction("AccessDenied", "Account");
+        }
+
         var game = await _gameService.GetGameByIdAsync(id);
         if (game == null)
         {
@@ -88,10 +105,15 @@ public class GameController : Controller
     }
 
     // Oyun düzenler
-    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<IActionResult> Edit(Game game)
     {
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        if (!isAdmin)
+        {
+            return RedirectToAction("AccessDenied", "Account");
+        }
+
         if (!ModelState.IsValid)
         {
             return View(game);
@@ -101,10 +123,16 @@ public class GameController : Controller
         return RedirectToAction(nameof(ViewGames));
     }
 
-    // Oyun siler
-    [Authorize(Roles = "Admin")]
+    // Oyun silme sayfasını gösterir
+    [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        if (!isAdmin)
+        {
+            return RedirectToAction("AccessDenied", "Account");
+        }
+
         var game = await _gameService.GetGameByIdAsync(id);
         if (game == null)
         {

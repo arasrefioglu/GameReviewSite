@@ -23,7 +23,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddScoped<IRepository<Game>, GameRepository>();
 builder.Services.AddScoped<IRepository<GameComment>, GameCommentRepository>();
 builder.Services.AddScoped<IRepository<UserRating>, UserRatingRepository>();
-
+builder.Services.AddScoped<IRepository<GameGenre>, GameGenreRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
 
 
