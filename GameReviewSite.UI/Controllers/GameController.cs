@@ -34,7 +34,6 @@ public class GameController : Controller
         return View(game);
     }
 
-
     // Oyuna yorum ekler
     [HttpPost]
     public async Task<IActionResult> AddComment(int gameId, string comment)
