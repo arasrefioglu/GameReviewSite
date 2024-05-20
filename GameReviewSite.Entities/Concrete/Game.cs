@@ -16,8 +16,5 @@ namespace GameReviewSite.Entities.Concrete
         public virtual ICollection<UserRating>? Ratings { get; set; }
         public virtual ICollection<GameComment>? Comments { get; set; }
 
-
-
-        //public virtual ICollection<GamePrice> Prices { get; set; }
     }
 }

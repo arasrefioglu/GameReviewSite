@@ -11,8 +11,6 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
             base.Configure(builder);
 
             builder.Property(p => p.Comment).HasMaxLength(1000);
-            //builder.HasIndex(p => p.GameId).IsUnique();
-            //builder.HasIndex(p => p.UserId).IsUnique();
 
             builder.HasIndex(p => p.GameId);
             builder.HasIndex(p => p.UserId);

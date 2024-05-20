@@ -27,15 +27,6 @@ builder.Services.AddScoped<IRepository<GameGenre>, GameGenreRepository>();
 builder.Services.AddScoped<IGameService, GameService>();
 
 
-//builder.Services.AddScoped<IGameService>(provider =>
-//{
-//    var gameRepo = provider.GetRequiredService<IRepository<Game>>();
-//    var commentRepo = provider.GetRequiredService<IRepository<GameComment>>();
-//    var ratingRepo = provider.GetRequiredService<IRepository<UserRating>>();
-//    return (IGameService)new GameService(gameRepo, commentRepo, ratingRepo);
-//});
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

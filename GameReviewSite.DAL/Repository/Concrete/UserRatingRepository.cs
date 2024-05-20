@@ -1,6 +1,5 @@
 ﻿using GameReviewSite.DAL.Context;
 using GameReviewSite.Entities.Concrete;
-//using GameReviewSite.Repositories;
 
 public class UserRatingRepository : Repository<UserRating>, IRepository<UserRating>
 {

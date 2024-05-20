@@ -25,11 +25,11 @@ namespace GameReviewSite.DAL.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("GameReviewSite.Entities"));
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.Load("GameReviewSite.Entities"));
 
         }
 
@@ -38,9 +38,6 @@ namespace GameReviewSite.DAL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<GameGenre> GameGenres { get; set; }
-        public DbSet<GameWebsite> GameWebsites { get; set; }
-        public DbSet<CurrencyType> CurrencyTypes { get; set; }
-        public DbSet<GamePrice> GamePrices { get; set; }
         public DbSet<UserRating> UserRatings { get; set; }
         public DbSet<GameComment> GameComments { get; set; }
     }

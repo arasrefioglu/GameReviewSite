@@ -12,9 +12,6 @@ namespace GameReviewSite.Entities.Concrete
         public bool IsAdmin { get; set; }
         public virtual ICollection<UserRating> Ratings { get; set; }
         public virtual ICollection<GameComment> Comments { get; set; }
-
-        [NotMapped] 
-        public string Password { get; set; }
     }
 
 

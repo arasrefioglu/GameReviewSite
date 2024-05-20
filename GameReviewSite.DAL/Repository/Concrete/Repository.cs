@@ -52,7 +52,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
     public Task Update(TEntity entity)
     {
-        // Attach the entity if it isn't already attached to the context
         if (_context.Entry(entity).State == EntityState.Detached)
         {
             _dbSet.Attach(entity);
