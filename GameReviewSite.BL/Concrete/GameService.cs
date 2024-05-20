@@ -81,17 +81,6 @@ namespace GameReviewSite.BL.Concrete
             await _ratingRepository.SaveAsync();
         }
 
-        public async Task<IEnumerable<Game>> GetPopularGamesAsync()
-        {
-            // Popüler oyunları döndüren örnek sorgu
-            return await _gameRepository.FindAsync(g => g.Ratings.Average(r => r.Rating) > 4);
-        }
-
-        public async Task<IEnumerable<Game>> GetRecentGamesAsync()
-        {
-            int currentYear = DateTime.Now.Year; // Geçerli yılı al
-            return await _gameRepository.FindAsync(g => g.ReleaseYear >= currentYear - 1);
-        }
 
         public async Task<Game> GetGameDetailsAsync(int id)
         {

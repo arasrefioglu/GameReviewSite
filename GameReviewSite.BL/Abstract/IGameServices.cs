@@ -18,8 +18,6 @@ namespace GameReviewSite.BL.Abstract
         Task AddCommentAsync(GameComment comment);
         Task AddRatingAsync(UserRating rating);
 
-        Task<IEnumerable<Game>> GetPopularGamesAsync();
-        Task<IEnumerable<Game>> GetRecentGamesAsync();
 
         Task<Game> GetGameDetailsAsync(int id);
     }

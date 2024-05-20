@@ -7,7 +7,6 @@ namespace GameReviewSite.Entities.Concrete
     {
 
 
-
         public int Rating { get; set; }
 
         public int GameId { get; set; }
