@@ -9,10 +9,9 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-
             builder.Property(u => u.IsAdmin);  
-            builder.HasMany(u => u.Ratings).WithOne(r => r.User).HasForeignKey(r => r.UserId);
-            builder.HasMany(u => u.Comments).WithOne(c => c.User).HasForeignKey(c => c.UserId);
+            builder.HasMany(u => u.Ratings).WithOne(r => r.User).HasPrincipalKey(r => r.Id);
+            builder.HasMany(u => u.Comments).WithOne(c => c.User).HasPrincipalKey(c => c.Id);
         }
     }
 }

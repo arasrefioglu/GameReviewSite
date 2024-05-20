@@ -1,15 +1,19 @@
-﻿using GameReviewSite.UI.Models;
+﻿using GameReviewSite.DAL.Context;
+using GameReviewSite.Entities.Concrete;
+using GameReviewSite.UI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Security.Policy;
 
 public class AccountController : Controller
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-
-    public AccountController(SignInManager<IdentityUser> signInManager)
+    private readonly SignInManager<User> _signInManager;
+    private readonly IRepository<User> _userRepository;
+    public AccountController(SignInManager<User> signInManager, IRepository<User> userRepository)
     {
         _signInManager = signInManager;
+        _userRepository = userRepository;
     }
 
     [HttpGet]
@@ -26,6 +30,16 @@ public class AccountController : Controller
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
             if (result.Succeeded)
             {
+                var user = (await _userRepository.FindAsync(x => x.Email == model.Email)).FirstOrDefault();
+
+                var claims = new List<Claim>
+                {
+                    new("userId", user.Id.ToString()),
+                };
+
+                await _signInManager.SignInWithClaimsAsync(user, model.RememberMe, claims);
+
+
                 if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);

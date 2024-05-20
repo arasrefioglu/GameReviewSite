@@ -17,13 +17,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDbContext<GameDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefConn")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddScoped<IRepository<Game>, GameRepository>();
-builder.Services.AddScoped<IRepository<GameComment>, GameCommentRepository>();
-builder.Services.AddScoped<IRepository<UserRating>, UserRatingRepository>();
-builder.Services.AddScoped<IRepository<GameGenre>, GameGenreRepository>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IGameService, GameService>();
 
 

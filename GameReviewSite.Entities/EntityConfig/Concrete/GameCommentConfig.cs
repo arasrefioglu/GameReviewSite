@@ -13,7 +13,7 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
             builder.Property(p => p.Comment).HasMaxLength(1000);
 
             builder.HasIndex(p => p.GameId);
-            builder.HasIndex(p => p.UserId);
+            builder.HasOne(u => u.User).WithMany(u => u.Comments).HasPrincipalKey(u => u.Id);
         }
     }
 }

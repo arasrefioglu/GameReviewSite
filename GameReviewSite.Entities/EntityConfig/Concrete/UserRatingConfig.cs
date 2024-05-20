@@ -10,8 +10,9 @@ namespace GameReviewSite.Entities.EntityConfig.Concrete
         {
             base.Configure(builder);
 
+            builder.HasOne(u => u.User).WithMany(u => u.Ratings).HasPrincipalKey(u => u.Id);
+
             builder.HasIndex(p => p.GameId); 
-            builder.HasIndex(p => p.UserId);
         }
     }
 }

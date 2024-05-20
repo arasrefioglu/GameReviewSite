@@ -40,6 +40,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return await _dbSet.Where(predicate).ToListAsync();
     }
 
+    public async Task<IEnumerable<TEntity>> GetByIncludesAsync(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, object>> include) => await _context.Set<TEntity>()
+                         .Where(predicate)
+                         .Include(include)
+                         .ToListAsync();
+
     public async Task AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);

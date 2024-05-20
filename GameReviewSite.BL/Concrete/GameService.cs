@@ -102,7 +102,7 @@ namespace GameReviewSite.BL.Concrete
             {
                 game.Genre = (await _genreRepository.FindAsync(g => g.Id == game.GameGenreId)).FirstOrDefault();
                 game.Ratings = (await _ratingRepository.FindAsync(r => r.GameId == id)).ToList();
-                game.Comments = (await _commentRepository.FindAsync(c => c.GameId == id)).ToList();
+                game.Comments = (await _commentRepository.GetByIncludesAsync(c => c.GameId == id, q=>q.User)).ToList();
             }
 
             return game;

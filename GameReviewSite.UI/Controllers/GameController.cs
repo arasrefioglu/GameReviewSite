@@ -18,7 +18,7 @@ public class GameController : Controller
     public async Task<IActionResult> ViewGames()
     {
         var games = await _gameService.GetGamesAsync();
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         ViewBag.IsAdmin = isAdmin;
         return View(games);
     }
@@ -38,8 +38,13 @@ public class GameController : Controller
     [HttpPost]
     public async Task<IActionResult> AddComment(int gameId, string comment)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var gameComment = new GameComment { GameId = gameId, Comment = comment, UserId = userId };
+        var userId = User.FindFirstValue("userId");
+        var gameComment = new GameComment
+        {
+            GameId = gameId,
+            Comment = comment,
+            UserId = Guid.Parse(userId)
+        };
         await _gameService.AddCommentAsync(gameComment);
         return RedirectToAction("Details", new { id = gameId });
     }
@@ -48,8 +53,13 @@ public class GameController : Controller
     [HttpPost]
     public async Task<IActionResult> AddRating(int gameId, int rating)
     {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var userRating = new UserRating { GameId = gameId, Rating = rating, UserId = userId };
+        var userId = User.FindFirstValue("userId");
+        var userRating = new UserRating
+        {
+            GameId = gameId,
+            Rating = rating,
+            UserId = Guid.Parse(userId)
+        };
         await _gameService.AddRatingAsync(userRating);
         return RedirectToAction("Details", new { id = gameId });
     }
@@ -58,7 +68,7 @@ public class GameController : Controller
     [HttpGet]
     public IActionResult Add()
     {
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
@@ -70,7 +80,7 @@ public class GameController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(Game game)
     {
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
@@ -89,7 +99,7 @@ public class GameController : Controller
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
@@ -107,7 +117,7 @@ public class GameController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(Game game)
     {
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
@@ -126,7 +136,7 @@ public class GameController : Controller
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
-        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin@admin.com";
+        var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
