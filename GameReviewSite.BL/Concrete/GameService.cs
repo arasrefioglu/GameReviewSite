@@ -82,6 +82,12 @@ namespace GameReviewSite.BL.Concrete
         }
 
 
+        public async Task<IEnumerable<GameGenre>> GetGenresAsync()
+        {
+            return await _genreRepository.GetAllAsync();
+        }
+
+
         public async Task<Game> GetGameDetailsAsync(int id)
         {
             // Genre, Ratings ve Comments nesnelerini dahil ediyoruz

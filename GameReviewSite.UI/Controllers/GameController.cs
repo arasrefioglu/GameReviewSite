@@ -2,6 +2,7 @@
 using GameReviewSite.Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -95,7 +96,6 @@ public class GameController : Controller
         return RedirectToAction(nameof(ViewGames));
     }
 
-    // Oyun düzenleme sayfasını gösterir
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -110,12 +110,16 @@ public class GameController : Controller
         {
             return NotFound();
         }
+
+        // Load genres for the dropdown
+        var genres = await _gameService.GetGenresAsync();
+        ViewBag.Genres = new SelectList(genres, "Id", "Name");
+
         return View(game);
     }
 
-    // Oyun düzenler
     [HttpPost]
-    public async Task<IActionResult> Edit(Game game)
+    public async Task<IActionResult> Edit(Game game, IFormFile imageFile)
     {
         var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
@@ -123,14 +127,31 @@ public class GameController : Controller
             return RedirectToAction("AccessDenied", "Account");
         }
 
-        if (!ModelState.IsValid)
+        var existingGame = await _gameService.GetGameByIdAsync(game.Id);
+        if (existingGame == null)
         {
-            return View(game);
+            return NotFound();
         }
 
-        await _gameService.UpdateGameAsync(game);
+        existingGame.Name = game.Name;
+        existingGame.GameGenreId = game.GameGenreId;
+        existingGame.ReleaseYear = game.ReleaseYear;
+
+        if (imageFile != null)
+        {
+            // Save the new image file and update the Image property
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imageFile.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await imageFile.CopyToAsync(stream);
+            }
+            existingGame.Image = "/images/" + imageFile.FileName;
+        }
+
+        await _gameService.UpdateGameAsync(existingGame);
         return RedirectToAction(nameof(ViewGames));
     }
+
 
     // Oyun silme sayfasını gösterir
     [HttpGet]
