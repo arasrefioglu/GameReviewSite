@@ -1,16 +1,12 @@
-﻿@model GameReviewSite.Entities.Concrete.Game
+﻿@model GameReviewSite.UI.Models.GameViewModel
 
 @{
     ViewData["Title"] = "Add New Game";
 }
 
-
-
-
-
- <h2>Add New Game</h2>
+<h2>Add New Game</h2>
 <br>
-<form asp-action="Add" method="post">
+<form asp-action="Add" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Game Name</label>
         <input asp-for="Name" class="form-control" />
@@ -18,12 +14,17 @@
     <br>
     <div class="form-group">
         <label>Game Genre</label>
-        <input asp-for="Genre" class="form-control" />
+        <select asp-for="GameGenreId" class="form-control" asp-items="ViewBag.Genres"></select>
     </div>
     <br>
     <div class="form-group">
         <label>Release Year</label>
         <input asp-for="ReleaseYear" class="form-control" />
+    </div>
+    <br>
+    <div class="form-group">
+        <label>Game Image</label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
     </div>
     <br>
     <button type="submit" class="btn btn-primary">Save</button>

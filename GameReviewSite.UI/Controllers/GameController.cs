@@ -1,5 +1,6 @@
 ﻿using GameReviewSite.BL.Abstract;
 using GameReviewSite.Entities.Concrete;
+using GameReviewSite.UI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -67,19 +68,23 @@ public class GameController : Controller
 
     // Yeni oyun ekleme sayfasını gösterir
     [HttpGet]
-    public IActionResult Add()
+    public async Task<IActionResult> Add()
     {
         var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
         {
             return RedirectToAction("AccessDenied", "Account");
         }
+
+        var genres = await _gameService.GetGenresAsync();
+        ViewBag.Genres = new SelectList(genres, "Id", "Name");
+
         return View();
     }
 
     // Yeni oyun ekler
     [HttpPost]
-    public async Task<IActionResult> Add(Game game)
+    public async Task<IActionResult> Add(GameViewModel model)
     {
         var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
         if (!isAdmin)
@@ -89,12 +94,33 @@ public class GameController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View(game);
+            var genres = await _gameService.GetGenresAsync();
+            ViewBag.Genres = new SelectList(genres, "Id", "Name");
+            return View(model);
+        }
+
+        var game = new Game
+        {
+            Name = model.Name,
+            GameGenreId = model.GameGenreId,
+            ReleaseYear = model.ReleaseYear,
+        };
+
+        if (model.ImageFile != null)
+        {
+            // Save the image file
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", model.ImageFile.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.ImageFile.CopyToAsync(stream);
+            }
+            game.Image = "/images/" + model.ImageFile.FileName;
         }
 
         await _gameService.AddGameAsync(game);
         return RedirectToAction(nameof(ViewGames));
     }
+
 
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
