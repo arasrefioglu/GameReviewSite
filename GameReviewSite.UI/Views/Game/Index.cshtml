@@ -2,7 +2,6 @@
 
 <h1>Game List</h1>
 
-<!-- Add Game Button (visible only to admins) -->
 @if (User.IsInRole("Admin"))
 {
     <a asp-action="Add" class="btn btn-success mb-2">Add New Game</a>

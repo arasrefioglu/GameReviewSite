@@ -90,7 +90,6 @@ namespace GameReviewSite.BL.Concrete
 
         public async Task<Game> GetGameDetailsAsync(int id)
         {
-            // Genre, Ratings ve Comments nesnelerini dahil ediyoruz
             var game = (await _gameRepository.FindAsync(g => g.Id == id)).FirstOrDefault();
 
             if (game != null)
