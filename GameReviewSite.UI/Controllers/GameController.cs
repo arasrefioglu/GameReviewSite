@@ -16,7 +16,7 @@ public class GameController : Controller
         _gameService = gameService;
     }
 
-    // Oyun listesini gösterir
+
     public async Task<IActionResult> ViewGames()
     {
         var games = await _gameService.GetGamesAsync();
@@ -25,7 +25,7 @@ public class GameController : Controller
         return View(games);
     }
 
-    // Oyun detaylarını gösterir
+
     public async Task<IActionResult> Details(int id)
     {
         var game = await _gameService.GetGameDetailsAsync(id);
@@ -36,7 +36,7 @@ public class GameController : Controller
         return View(game);
     }
 
-    // Oyuna yorum ekler
+
     [HttpPost]
     public async Task<IActionResult> AddComment(int gameId, string comment)
     {
@@ -51,7 +51,7 @@ public class GameController : Controller
         return RedirectToAction("Details", new { id = gameId });
     }
 
-    // Oyuna puan ekler
+
     [HttpPost]
     public async Task<IActionResult> AddRating(int gameId, int rating)
     {
@@ -66,7 +66,7 @@ public class GameController : Controller
         return RedirectToAction("Details", new { id = gameId });
     }
 
-    // Yeni oyun ekleme sayfasını gösterir
+  
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -82,7 +82,7 @@ public class GameController : Controller
         return View();
     }
 
-    // Yeni oyun ekler
+
     [HttpPost]
     public async Task<IActionResult> Add(GameViewModel model)
     {
@@ -108,7 +108,7 @@ public class GameController : Controller
 
         if (model.ImageFile != null)
         {
-            // Save the image file
+
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", model.ImageFile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -122,7 +122,6 @@ public class GameController : Controller
     }
 
 
-    [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
         var isAdmin = User.Identity.IsAuthenticated && User.Identity.Name == "admin";
@@ -137,7 +136,6 @@ public class GameController : Controller
             return NotFound();
         }
 
-        // Load genres for the dropdown
         var genres = await _gameService.GetGenresAsync();
         ViewBag.Genres = new SelectList(genres, "Id", "Name");
 
@@ -165,7 +163,6 @@ public class GameController : Controller
 
         if (imageFile != null)
         {
-            // Save the new image file and update the Image property
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imageFile.FileName);
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -178,8 +175,6 @@ public class GameController : Controller
         return RedirectToAction(nameof(ViewGames));
     }
 
-
-    // Oyun silme sayfasını gösterir
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
